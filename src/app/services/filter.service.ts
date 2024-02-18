@@ -14,7 +14,7 @@ export class FilterService {
   private volumeFilter$: BehaviorSubject<[number,number] | null> = new BehaviorSubject<[number,number] | null>(null);
   private categoryFilter$: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
   private lgaFilter$: BehaviorSubject<boolean | null> = new BehaviorSubject<boolean | null>(null);
-  
+
   setNameFilter(name: string | null) {
     this.nameFilter$.next(name);
   }
@@ -40,6 +40,7 @@ export class FilterService {
   }
 
   applyFilters(products: Observable<{ [id: string]: Product }>, categoryDict: Observable<{ [id: string]: ExtendedCategory }>): Observable<Product[]> {
+
     return combineLatest([
       products,
       this.nameFilter$,
@@ -47,17 +48,17 @@ export class FilterService {
       this.priceFilter$,
       this.volumeFilter$,
       this.categoryFilter$,
-      this.lgaFilter$
+      this.lgaFilter$,
+      categoryDict
     ]).pipe(
-      map(([products, name, id, price, volume, category, lga]) => {
+      map(([products, name, id, price, volume, category, lga, categoryDict]) => {
         const filteredProducts = Object.values(products).filter(product => {
           const isInStock = !lga || product.extra['AGA']['LGA'] > 0;
           const matchesName = !name || product.name.includes(name);
           const matchesId = !id || product.id === id;
           const matchesPrice = !price || product.extra['AGA']['PRI'] <= price;
           const matchesVolume = !volume || (product.extra['AGA']['VOL'] >= Math.min(...volume) && product.extra['AGA']['VOL'] <= Math.max(...volume));
-          const matchesCategory = !category || (categoryDict.subscribe(categories => {categories[category]?.products.has(product.id)}));
-  
+          const matchesCategory = !category || (categoryDict[category]?.products.has(product.id));
           return matchesName && matchesId && matchesPrice && matchesVolume && matchesCategory && isInStock;
         });
   

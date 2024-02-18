@@ -35,11 +35,11 @@ export class DataService {
     //expose
     this.productDict = this.productDict$.asObservable();
 
-    this.categoryService.getCategories().subscribe(categories => {
+    this.categoryService.getAlotOfCategories().subscribe(categories => {
       this.populateProducts(categories);
       this.populateCategories(categories);
     });
-    console.log(this.categoryDict);
+    //console.log(this.categoryDict);
   }
   // Enable adding products to the productDict and emitting the new value
   addProduct(product: Product) {

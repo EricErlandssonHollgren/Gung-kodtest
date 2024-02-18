@@ -1,8 +1,12 @@
 <div class="container">
+  <div *ngIf="isLoading; else dataLoaded">
+    <app-skeleton-loader></app-skeleton-loader>
+  </div>
+  <ng-template #dataLoaded>
     <cdk-virtual-scroll-viewport itemSize="50" class="container">
-        <div *cdkVirtualFor="let product of products; let i = index" class="product-item secondary roboto-light">
+        <div *cdkVirtualFor="let product of filteredProducts$ | async" class="product-item secondary roboto-light">
           <app-list-item [name]="product.name" [id]="product.id" [price]="product.extra['PRI']" [LGA]="product.extra['AGA']['LGA']"></app-list-item>
         </div>
     </cdk-virtual-scroll-viewport> 
-    
+  </ng-template>
 </div>
