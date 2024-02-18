@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DataTraverserService } from './data-traverser.service';
+import { FilterService } from './filter.service';
 
-describe('DataTraverserService', () => {
-  let service: DataTraverserService;
+describe('FilterService', () => {
+  let service: FilterService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(DataTraverserService);
+    service = TestBed.inject(FilterService);
   });
 
   it('should be created', () => {
