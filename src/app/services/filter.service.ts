@@ -71,7 +71,7 @@ export class FilterService {
           const matchesCategory = !category || (categoryDict[category]?.products.has(product.id));
           return matchesName && matchesId && matchesPrice && matchesVolume && matchesCategory && isInStock;
         });
-        // Sorting logic
+        
         switch(sortBy) {
           case 'Category':
             filteredProducts.sort((a, b) => categoryDict[a.extra['AGA']['CAT']].name.localeCompare(categoryDict[b.extra['AGA']['CAT']].name));
