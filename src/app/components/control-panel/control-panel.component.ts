@@ -37,7 +37,7 @@ export class ControlPanelComponent {
     this.priceSubject = new Subject<number>();
     this.displayPrice = 5000;
     this.categories = [];
-    this.sortByList = ['Category', 'Volume', 'Stock'];
+    this.sortByList = ['Category', 'Volume', 'Stock', 'Price'];
 
     this.dataService.getCategoryDict().subscribe((categories) => {
       this.categories = Object.keys(categories);

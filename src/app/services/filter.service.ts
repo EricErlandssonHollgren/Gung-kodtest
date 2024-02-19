@@ -82,6 +82,9 @@ export class FilterService {
           case 'Stock':
             filteredProducts.sort((a, b) => parseFloat(b.extra['AGA']['LGA']) - parseFloat(a.extra['AGA']['LGA']));
             break;
+          case 'Price':
+            filteredProducts.sort((a, b) => a.extra['AGA']['PRI'] - b.extra['AGA']['PRI']);
+            break;
         }
         return filteredProducts;
       })
