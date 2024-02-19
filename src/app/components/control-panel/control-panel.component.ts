@@ -60,7 +60,14 @@ export class ControlPanelComponent {
   }
   onNameFilterChange(event:Event) {
     const inputValue = (event.target as HTMLInputElement).value;
-    this.searchSubject.next(inputValue);
+    if(inputValue.includes('id:')){
+      const id = inputValue.split('id:')[1];
+      
+      this.searchSubject.next('');
+      this.idSubject.next(id);
+    }else{
+      this.searchSubject.next(inputValue);
+    }
   }
   onInStockChange(event: Event) {
     const isChecked = (event.target as HTMLInputElement).checked;

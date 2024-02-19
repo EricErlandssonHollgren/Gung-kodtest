@@ -53,7 +53,7 @@ export class FilterService {
     ]).pipe(
       map(([products, name, id, price, volume, category, lga, categoryDict]) => {
         const filteredProducts = Object.values(products).filter(product => {
-          const isInStock = !lga || product.extra['AGA']['LGA'] > 0;
+          const isInStock = !lga || parseFloat(product.extra['AGA']['LGA']) > 0;
           const matchesName = !name || product.name.includes(name);
           const matchesId = !id || product.id.includes(id);
           const matchesPrice = !price || product.extra['AGA']['PRI'] <= price;
@@ -61,8 +61,6 @@ export class FilterService {
           const matchesCategory = !category || (categoryDict[category]?.products.has(product.id));
           return matchesName && matchesId && matchesPrice && matchesVolume && matchesCategory && isInStock;
         });
-  
-        console.log('Filtered Products:', filteredProducts); // Debugging
         return filteredProducts;
       })
     );
