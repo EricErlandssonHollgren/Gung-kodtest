@@ -35,7 +35,7 @@ export class DataService {
     //expose
     this.productDict = this.productDict$.asObservable();
 
-    this.categoryService.getAlotOfCategories().subscribe(categories => {
+    this.categoryService.getCategories().subscribe(categories => {
       this.populateProducts(categories);
       this.populateCategories(categories);
     });

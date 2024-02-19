@@ -55,7 +55,7 @@ export class FilterService {
         const filteredProducts = Object.values(products).filter(product => {
           const isInStock = !lga || product.extra['AGA']['LGA'] > 0;
           const matchesName = !name || product.name.includes(name);
-          const matchesId = !id || product.id === id;
+          const matchesId = !id || product.id.includes(id);
           const matchesPrice = !price || product.extra['AGA']['PRI'] <= price;
           const matchesVolume = !volume || (product.extra['AGA']['VOL'] >= Math.min(...volume) && product.extra['AGA']['VOL'] <= Math.max(...volume));
           const matchesCategory = !category || (categoryDict[category]?.products.has(product.id));
