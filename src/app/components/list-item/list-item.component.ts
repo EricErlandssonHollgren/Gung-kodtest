@@ -15,11 +15,11 @@ export class ListItemComponent {
   @Input() id: string = '';
   @Input() price: number = -1;
   @Input() category: string = '';
-  @Input() LGA: number = -1;
+  @Input() LGA: string = '';
+  @Input() volume: string = '';
   inStock: boolean = false;
   
   ngOnInit() {
-    this.inStock = this.LGA > 0;
-    console.log(this.inStock);
+    this.inStock = parseFloat(this.LGA) > 0;
   }
 }

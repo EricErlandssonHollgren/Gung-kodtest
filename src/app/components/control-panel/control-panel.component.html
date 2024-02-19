@@ -1,20 +1,27 @@
 <div class="container">
     <form class="row g-3">
-        <div class="col-auto">
-            <input type="text" class="form-control" placeholder="Search by name or (id:)" (input)="onNameFilterChange($event)">
-            <!--<input type="text" class="form-control" placeholder="Search by id" (input)="onIdFilterChange($event)">-->
-        </div>
-        <div class="col-auto">
-            <input class="form-check-input" type="checkbox" id="inStockCheckbox" (change)="onInStockChange($event)">
-            <label for="inStockCheckbox" class="form-label roboto-light secondary">In stock</label>
-
-            <input type="range" id="maxPriceRange" min="0" max="10000" (input)="onMaxPriceChange($event)">
-            <label for="maxPriceRange" class="roboto-light secondary">Maximum Price: {{displayPrice}}</label>
-        </div>
-        <label for="categorySelect">Category: </label>
-        <select id="categorySelect" [(ngModel)]="selectedCategory" name="categorySelect" (change)="onCategoryChange(selectedCategory)">
-            <option value="">All Categories</option>
-            <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
-        </select>
+        <div class="col-md-6">
+            <label for="search" class="form-label secondary">Search</label>
+            <input type="text" class="form-control" id="search" placeholder="Search by name or (id:)" (input)="onNameFilterChange($event)">
+          </div>
+          <div class="col-md-4">
+            <label for="inputState" class="form-label secondary">Category</label>
+            <select id="inputState" [(ngModel)]="selectedCategory" class="form-select" name="categorySelect" (change)="onCategoryChange(selectedCategory)">
+              <option selected value="">All Categories</option>
+              <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <label for="inputmaxPrice" class="form-label secondary">Max Price</label>
+            <input type="text" class="form-control" id="inputMaxPrice" (input)="onMaxPriceChange($event)">
+          </div>
+          <div class="col-12">
+            <div class="form-check">
+              <input class="form-check-input secondary" type="checkbox" id="gridCheck" (change)="onInStockChange($event)">
+              <label class="form-check-label secondary" for="gridCheck">
+                Show only products in stock
+              </label>
+            </div>
+          </div>
     </form>
 </div>

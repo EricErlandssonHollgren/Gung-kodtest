@@ -1,12 +1,14 @@
-<div class="container">
-    <div class="info">
-        <h2 class="secondary roboto-medium">{{name}}</h2>
-        <p class="secondary roboto-light">ID: {{id}}</p>
-        <p class="secondary roboto-light">Price: {{price}}</p>
+<div class="card d-flex d-flex-col p-2 justify-content-between" style="width: 12rem; height: 15rem; border-radius: 0.5rem; background-color: #1f1f1f; border-color: #5a5a5a;">
+    <div class="align-self-start">
+        <h5 class="card-title accent roboto-light mb-1">{{name}}</h5>
+        <p class="card-text roboto-light mb-3" style="color:#868686">{{category}}</p>
     </div>
-    <h2 class="secondary roboto-light">{{category}}</h2>
-    <div *ngIf="inStock; then thenBlock else elseBlock"></div>
-    <ng-template #thenBlock><mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="done" [ngStyle]="{'color':'white'}"></mat-icon></ng-template>
-    <ng-template #elseBlock><mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="close" [ngStyle]="{'color':'white'}"></mat-icon></ng-template>
-        
+       
+    <div>
+        <p class="card-text roboto-light secondary mb-1">ID: {{id}}</p>
+        <p class="card-text roboto-light secondary mb-1">{{price}} kr</p>
+        <p class="card-text roboto-light secondary mb-1">Volume: {{volume}}</p>
+        <p class="card-text roboto-light secondary">Stock: {{LGA}}</p>
+    </div>
+    
 </div>
