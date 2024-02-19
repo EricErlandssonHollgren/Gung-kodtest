@@ -15,6 +15,13 @@
             <label for="inputmaxPrice" class="form-label secondary">Max Price</label>
             <input type="text" class="form-control" id="inputMaxPrice" (input)="onMaxPriceChange($event)">
           </div>
+          <div class="col-md-4">
+            <label for="inputState" class="form-label secondary">Sort by</label>
+            <select id="inputState" [(ngModel)]="selectedSort" class="form-select" name="sortSelect" (change)="onSortChange(selectedSort)">
+              <option selected value="">None</option>
+              <option *ngFor="let sortby of sortByList" [value]="sortby">{{ sortby }}</option>
+            </select>
+          </div>
           <div class="col-12">
             <div class="form-check">
               <input class="form-check-input secondary" type="checkbox" id="gridCheck" (change)="onInStockChange($event)">

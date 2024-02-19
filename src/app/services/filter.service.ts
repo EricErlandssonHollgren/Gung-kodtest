@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
+import { Observable, BehaviorSubject, combineLatest, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Product } from './product.service';
 import { ExtendedCategory } from '../interfaces/extended-category.interface';
@@ -14,6 +14,11 @@ export class FilterService {
   private volumeFilter$: BehaviorSubject<[number,number] | null> = new BehaviorSubject<[number,number] | null>(null);
   private categoryFilter$: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
   private lgaFilter$: BehaviorSubject<boolean | null> = new BehaviorSubject<boolean | null>(null);
+  private sortBy$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+
+  getSortBy() {
+    return of(this.sortBy$);
+  }
 
   setNameFilter(name: string | null) {
     this.nameFilter$.next(name);
@@ -39,6 +44,10 @@ export class FilterService {
     this.lgaFilter$.next(lga);
   }
 
+  setSortBy(sortBy: string) {
+    this.sortBy$.next(sortBy);
+  }
+
   applyFilters(products: Observable<{ [id: string]: Product }>, categoryDict: Observable<{ [id: string]: ExtendedCategory }>): Observable<Product[]> {
 
     return combineLatest([
@@ -49,10 +58,11 @@ export class FilterService {
       this.volumeFilter$,
       this.categoryFilter$,
       this.lgaFilter$,
+      this.sortBy$,
       categoryDict
     ]).pipe(
-      map(([products, name, id, price, volume, category, lga, categoryDict]) => {
-        const filteredProducts = Object.values(products).filter(product => {
+      map(([products, name, id, price, volume, category, lga, sortBy, categoryDict]) => {
+        let filteredProducts = Object.values(products).filter(product => {
           const isInStock = !lga || parseFloat(product.extra['AGA']['LGA']) > 0;
           const matchesName = !name || product.name.includes(name);
           const matchesId = !id || product.id.includes(id);
@@ -61,6 +71,18 @@ export class FilterService {
           const matchesCategory = !category || (categoryDict[category]?.products.has(product.id));
           return matchesName && matchesId && matchesPrice && matchesVolume && matchesCategory && isInStock;
         });
+        // Sorting logic
+        switch(sortBy) {
+          case 'Category':
+            filteredProducts.sort((a, b) => categoryDict[a.extra['AGA']['CAT']].name.localeCompare(categoryDict[b.extra['AGA']['CAT']].name));
+            break;
+          case 'Volume':
+            filteredProducts.sort((a, b) => a.extra['AGA']['VOL'] - b.extra['AGA']['VOL']);
+            break;
+          case 'Stock':
+            filteredProducts.sort((a, b) => parseFloat(b.extra['AGA']['LGA']) - parseFloat(a.extra['AGA']['LGA']));
+            break;
+        }
         return filteredProducts;
       })
     );

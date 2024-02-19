@@ -24,5 +24,6 @@ export class ProductListComponent {
     this.dataService = dataService;
     this.filterService = filterService;
     this.filteredProducts$ = this.filterService.applyFilters(this.dataService.productDict, this.dataService.getCategoryDict());
+    
   }
 }

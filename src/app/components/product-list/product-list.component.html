@@ -3,7 +3,7 @@
     <div class="row">
       <div *cdkVirtualFor="let product of filteredProducts$ | async" class="col-3">
             <app-list-item [name]="product.name" [id]="product.id" [price]="product.extra['AGA']['PRI']"
-              [LGA]="product.extra['AGA']['LGA']" [category]="product.extra['AGA']['CAT']"></app-list-item>
+              [LGA]="product.extra['AGA']['LGA']" [category]="product.extra['AGA']['CAT']" [volume]="product.extra['AGA']['VOL']"></app-list-item>
       </div>
     </div>
   </cdk-virtual-scroll-viewport>

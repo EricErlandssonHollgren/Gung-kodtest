@@ -21,11 +21,14 @@ export class ControlPanelComponent {
   private dataService: DataService;
 
   selectedCategory: string;
+  selectedSort: string;
   public categories: string[];
   public displayPrice:number;
+  public sortByList: string[];
 
   constructor(filterService: FilterService, dataService: DataService) {
     this.selectedCategory = '';
+    this.selectedSort = '';
     this.filterService = filterService; 
     this.dataService = dataService;
     this.searchSubject = new Subject<string>();
@@ -34,6 +37,7 @@ export class ControlPanelComponent {
     this.priceSubject = new Subject<number>();
     this.displayPrice = 5000;
     this.categories = [];
+    this.sortByList = ['Category', 'Volume', 'Stock'];
 
     this.dataService.getCategoryDict().subscribe((categories) => {
       this.categories = Object.keys(categories);
@@ -62,7 +66,6 @@ export class ControlPanelComponent {
     const inputValue = (event.target as HTMLInputElement).value;
     if(inputValue.includes('id:')){
       const id = inputValue.split('id:')[1];
-      
       this.searchSubject.next('');
       this.idSubject.next(id);
     }else{
@@ -80,5 +83,9 @@ export class ControlPanelComponent {
   onCategoryChange(category: string) {
     const selectedCategory = category
     this.filterService.setCategoryFilter(selectedCategory);
+  }
+  onSortChange(sort: string) {
+    const selectedSort = sort;
+    this.filterService.setSortBy(selectedSort);
   }
 }
