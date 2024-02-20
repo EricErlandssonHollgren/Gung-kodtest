@@ -57,16 +57,13 @@ export class DataService {
 
   private populateCategories(category: Category, parentCategoryId: string | null = null) {
     if (category.id.startsWith('s')) {
-      // Use addCategory method to add the category
       this.addCategory(category as ExtendedCategory);
-
       // Link this category to its parent
       if (parentCategoryId) {
         let newData = this.categoryDict$.getValue();
         newData[parentCategoryId].childCategories.add(category.id);
         this.categoryDict$.next(newData);
       }
-
       // Recursively process child categories
       category.children.forEach(child => this.populateCategories(child, category.id));
     } else { // It's a product
@@ -97,7 +94,7 @@ export class DataService {
         if (product) {
           product.extra['AGA']['CAT'] = parentCategory;
           this.addProduct(product);
-        } else { //Used for getAlotOfCategories, Rand product wont work since products are stored in dictionary id will be the same
+        } else { //Used for getAlotOfCategories, Rand product won't work since products are stored in dictionary id will be the same
           this.addProduct({ id: category.id, name: category.name, extra: { 'AGA': { 'LGA': 1.00 , 'CAT': parentCategory, 'PRI': 1550} } });
         }
       });
