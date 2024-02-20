@@ -39,7 +39,7 @@ export class ControlPanelComponent {
     this.categories = [];
     this.sortByList = ['Category', 'Volume', 'Stock', 'Price'];
 
-    this.dataService.getCategoryDict().subscribe((categories) => {
+    this.dataService.categoryDict.subscribe((categories) => {
       this.categories = Object.keys(categories);
     });
     this.priceSubject.subscribe((value) => {
@@ -69,6 +69,7 @@ export class ControlPanelComponent {
       this.searchSubject.next('');
       this.idSubject.next(id);
     }else{
+      this.idSubject.next('');
       this.searchSubject.next(inputValue);
     }
   }

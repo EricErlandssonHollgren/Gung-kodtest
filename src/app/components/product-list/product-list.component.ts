@@ -23,7 +23,7 @@ export class ProductListComponent {
   constructor(dataService: DataService, filterService: FilterService) {
     this.dataService = dataService;
     this.filterService = filterService;
-    this.filteredProducts$ = this.filterService.applyFilters(this.dataService.productDict, this.dataService.getCategoryDict());
+    this.filteredProducts$ = this.filterService.applyFilters(this.dataService.productDict, this.dataService.categoryDict);
     
   }
 }
