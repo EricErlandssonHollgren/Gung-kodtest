@@ -28,7 +28,7 @@ export class DataService {
     //expose
     this.productDict = this.productDict$.asObservable();
 
-    this.categoryService.getAlotOfCategories().subscribe(categories => {
+    this.categoryService.getCategories().subscribe(categories => {
       this.populateProducts(categories);
       this.populateCategories(categories);
     });
@@ -81,8 +81,7 @@ export class DataService {
         if (product) {
           product.extra['AGA']['CAT'] = parentCategory;
           this.addProduct(product);
-        }
-        else { //Used for getAlotOfCategories
+        } else { //Used for getAlotOfCategories, Rand product wont work since products are stored in dictionary id will be the same
           this.addProduct({ id: category.id, name: category.name, extra: { 'AGA': { 'LGA': 1.00 } } });
         }
       });
